@@ -1,7 +1,13 @@
 <template>
     <div class="layout">
         <div class="container">
-            <div class="title">财讯小灵通</div>
+            <div class="title-header">
+                <img class="logo" src="/logo_blue.png" alt="">
+                <div class="title">
+                    财讯小灵通
+                </div>
+            </div>
+            <Typewriter text="财讯小灵通，您的金融知识搜索专家，提供文字和图像搜索，快速获取金融信息。" :speed="5" style="margin-bottom:14px;" />
             <div class="searchBox">
                 <div style="width: 100%; flex: 1;">
                     <a-textarea placeholder="请上传图片、文件或者输入想要了解的问题" :auto-size="{
@@ -26,7 +32,9 @@
                         </a-modal>
                     </div>
                     <div class="addafter">
-                        <icon-send :style="{ fontSize: '22px' }" @click="this.$router.push('FinancialDashBoard')" />
+                        <div class="icon-wrapper" @click="this.$router.push('FinancialDashBoard')">
+                            <icon-send :style="{ fontSize: '22px' }" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,8 +47,8 @@
             </div>
         </div>
         <div class="slider">
-            <div class="menu-item" v-for="(item, index) in menuList" :key="index">
-                <img :src="`/icons/${item.icon}.svg`" alt="" style="height: 40px;width: 40px;" :title="item.name"
+            <div class="menu-item" v-for="(item, index) in menuList" :key="index" style="height: 64px;width: 64px;">
+                <img class="sidebar-icon" :src="`/icons/${item.icon}.svg`" alt="" :title="item.name"
                     @click="gotoPage(item.path)">
             </div>
         </div>
@@ -53,6 +61,7 @@
 <script>
 import IconWrapper from '../components/IconPicture.vue'
 import { IconFileImage, IconFolderAdd, IconPlusCircle, IconSend } from '@arco-design/web-vue/es/icon';
+import Typewriter from '../components/Typewriter.vue';
 
 export default {
     name: 'Search',
@@ -61,7 +70,8 @@ export default {
         IconFileImage,
         IconFolderAdd,
         IconPlusCircle,
-        IconSend
+        IconSend,
+        Typewriter
     },
     data() {
         return {
@@ -73,28 +83,20 @@ export default {
             visible: false,
             menuList: [
                 {
-                    name: '首页',
-                    icon: '下雪',
-                    path: 'index'
+                    name: '用户',
+                    icon: 'user',
+                    path: 'login'
                 },
                 {
-                    name: '搜索',
-                    icon: '星星',
-                    path: "search"
+                    name: 'history',
+                    icon: 'history',
+                    path: "history"
                 },
                 {
-                    name: '首页',
-                    icon: '下雪',
-                    path: 'index'
-                }, {
-                    name: '首页',
-                    icon: '下雪',
-                    path: 'index'
-                }, {
-                    name: '首页',
-                    icon: '下雪',
-                    path: 'index'
-                },
+                    name: 'home',
+                    icon: 'home',
+                    path: '/'
+                }
             ]
         }
     },
@@ -117,6 +119,27 @@ export default {
 </script>
 
 <style>
+@font-face {
+    font-family: 'ShouhuFont';
+    src: url('/360shouhuType-Bold.otf') format('opentype');
+}
+
+.title-header {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* 根据需要调整阴影颜色和透明度 */
+    border-radius: 10cm;
+    margin-right: 10px;
+}
+
 .layout {
     height: 100%;
     width: 100%;
@@ -131,7 +154,8 @@ export default {
 }
 
 .title {
-    margin-bottom: 24px;
+    font-family: 'ShouhuFont', monospace !important;
+    margin-bottom: 14px;
     font-family: '360shouhu Type';
     font-size: 64px;
     font-weight: 700;
@@ -142,8 +166,6 @@ export default {
     text-decoration-skip-ink: none;
     color: #4080FF
 }
-
-
 
 .searchBox {
     width: 770px;
@@ -185,6 +207,35 @@ export default {
 
 .addafter:last-child {
     margin-left: 8px;
+}
+
+.icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 可根据需求调整 */
+    border-radius: 25%;
+    /* 圆形背景 */
+    transition: background-color 0.3s;
+    /* 平滑过渡效果 */
+}
+
+.icon-wrapper:hover,
+.icon-wrapper:focus,
+.addafter:hover,
+.addafter:focus {
+    background-color: skyblue;
+    /* 设置天蓝色背景 */
+    cursor: pointer;
+    /* 鼠标悬停效果 */
+}
+
+/* 点击效果：微微缩小 */
+.icon-wrapper:active {
+    transform: scale(0.95);
+    /* 点击时缩小 */
+    background-color: #a0c4ff;
+    /* 点击时的背景色 */
 }
 
 .textareaClass {
@@ -242,5 +293,46 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     left: 10px;
+}
+
+.sidebar-icon {
+    border-radius: 50%;
+    background-color: #f2f3f5;
+    margin-bottom: 8px;
+}
+
+/* 悬停效果：改变背景色并缩放 */
+.sidebar-icon:hover {
+    background-color: #d0e7ff;
+    /* 鼠标悬停时的背景色 */
+    transform: scale(1.1);
+    /* 缩放效果 */
+}
+
+/* 点击效果：微微缩小 */
+.sidebar-icon:active {
+    transform: scale(0.95);
+    /* 点击时缩小 */
+    background-color: #a0c4ff;
+    /* 点击时的背景色 */
+}
+
+.listItems,
+.tag9 {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+        /* 可以添加位移动画 */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
