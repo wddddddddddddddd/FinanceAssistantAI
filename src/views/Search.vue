@@ -18,12 +18,15 @@
                         <icon-folder-add :style="{ fontSize: '22px' }" @click="handleClick" />
                         <a-modal :visible="visible" @ok="handleOk" @cancel="handleCancel">
                             <template #title>
-                                Title
+                                上传文件
                             </template>
-                            <div>You can customize modal body text by the current situation. This modal will be closed
-                                immediately once you press
-                                the OK button.</div>
+                            <div>
+                                <a-upload draggable action="/" />
+                            </div>
                         </a-modal>
+                    </div>
+                    <div class="addafter">
+                        <icon-send :style="{ fontSize: '22px' }" @click="this.$router.push('FinancialDashBoard')" />
                     </div>
                 </div>
             </div>
@@ -37,8 +40,8 @@
         </div>
         <div class="slider">
             <div class="menu-item" v-for="(item, index) in menuList" :key="index">
-                <img :src="`src/assets/icons/${item.icon}.svg`" alt="" style="height: 24px;width: 24px;"
-                    :title="item.name" @click="gotoPage(item.path)">
+                <img :src="`/icons/${item.icon}.svg`" alt="" style="height: 40px;width: 40px;" :title="item.name"
+                    @click="gotoPage(item.path)">
             </div>
         </div>
     </div>
@@ -49,7 +52,7 @@
 
 <script>
 import IconWrapper from '../components/IconPicture.vue'
-import { IconFileImage, IconFolderAdd, IconPlusCircle } from '@arco-design/web-vue/es/icon';
+import { IconFileImage, IconFolderAdd, IconPlusCircle, IconSend } from '@arco-design/web-vue/es/icon';
 
 export default {
     name: 'Search',
@@ -57,7 +60,8 @@ export default {
         IconWrapper,
         IconFileImage,
         IconFolderAdd,
-        IconPlusCircle
+        IconPlusCircle,
+        IconSend
     },
     data() {
         return {
@@ -77,7 +81,20 @@ export default {
                     name: '搜索',
                     icon: '星星',
                     path: "search"
-                }
+                },
+                {
+                    name: '首页',
+                    icon: '下雪',
+                    path: 'index'
+                }, {
+                    name: '首页',
+                    icon: '下雪',
+                    path: 'index'
+                }, {
+                    name: '首页',
+                    icon: '下雪',
+                    path: 'index'
+                },
             ]
         }
     },
@@ -94,7 +111,6 @@ export default {
         gotoPage(path) {
             console.log(path);
             this.$router.push(path)
-
         }
     },
 };
@@ -107,7 +123,7 @@ export default {
 }
 
 .container {
-    margin-top: 250px;
+    padding-top: 250px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -165,6 +181,10 @@ export default {
 
 .addafter:first-child {
     margin-right: 8px;
+}
+
+.addafter:last-child {
+    margin-left: 8px;
 }
 
 .textareaClass {
