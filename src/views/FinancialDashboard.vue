@@ -13,10 +13,18 @@
                             </a-menu>
                         </div>
                     </div>
+                    <div class="card-container">
+                        <!-- 使用 v-for 循环渲染所有卡片，并设置逐个显示的延迟 -->
+                        <StatisticCard v-for="(card, index) in cards" :key="index" :title="card.title"
+                            :imgSrc="card.img_src" :tagList="card.tag_list"
+                            :style="{ animationDelay: `${index * 0.2}s` }" />
+                    </div>
                 </a-layout-content>
                 <a-layout-sider>Sider</a-layout-sider>
             </a-layout>
-            <a-layout-footer>Footer</a-layout-footer>
+            <a-layout-footer>
+                <FooterCopyRight />
+            </a-layout-footer>
         </a-layout>
     </div>
 </template>
@@ -24,10 +32,15 @@
 
 <script>
 import TopNavbar from '../components/TopNavbar.vue';
+import StatisticCard from '@/components/StatisticCard.vue';
+import FooterCopyRight from '@/components/FooterCopyRight.vue';
+
 export default {
     name: 'FinancialDashBoard',
     components: {
-        TopNavbar
+        TopNavbar,
+        StatisticCard,
+        FooterCopyRight
     },
     data() {
         return {
@@ -93,6 +106,20 @@ export default {
                     label: '高端消费'
                 },
             ],
+            cards: [
+                { title: '2019-2024H1全球PC出货量', img_src: 'https://data.hanghangcha.com/SUBPNG/78/78468af1f16dd430d0488db42b467906.png', tag_list: ['家电', '信息家电'] },
+                { title: '全国数据中心机架规模', img_src: 'https://data.hanghangcha.com/SUBPNG/29/297f5189f72c21f7b9d2e9afc425a4bf.png', tag_list: ['大数据', '数据中心'] },
+                { title: '2019-2023年智能穿戴设备出货量', img_src: 'https://data.hanghangcha.com/SUBPNG/2b/2bd74cfce9f64014d04571343ce8a817.png', tag_list: ['智能硬件'] },
+                { title: '2019-2024H1智能手机出货量', img_src: 'https://data.hanghangcha.com/SUBPNG/b2/b28f3fbf551f5c2b546f972f3adc476a.png', tag_list: ['手机'] },
+                { title: '数据中心PUE指标要求', img_src: 'https://data.hanghangcha.com/SUBPNG/e1/e1389e80797a225ae751a1b36c2ae284.png', tag_list: ['大数据', '数据中心'] },
+                { title: '热管结构示意图', img_src: 'https://data.hanghangcha.com/SUBPNG/19/1981c3d0be8b12c7eafa3f737aba978e.png', tag_list: ['电子元件'] },
+                { title: '2019-2024H1全球PC出货量', img_src: 'https://data.hanghangcha.com/SUBPNG/78/78468af1f16dd430d0488db42b467906.png', tag_list: ['家电', '信息家电'] },
+                { title: '全国数据中心机架规模', img_src: 'https://data.hanghangcha.com/SUBPNG/29/297f5189f72c21f7b9d2e9afc425a4bf.png', tag_list: ['大数据', '数据中心'] },
+                { title: '2019-2023年智能穿戴设备出货量', img_src: 'https://data.hanghangcha.com/SUBPNG/2b/2bd74cfce9f64014d04571343ce8a817.png', tag_list: ['智能硬件'] },
+                { title: '2019-2024H1智能手机出货量', img_src: 'https://data.hanghangcha.com/SUBPNG/b2/b28f3fbf551f5c2b546f972f3adc476a.png', tag_list: ['手机'] },
+                { title: '数据中心PUE指标要求', img_src: 'https://data.hanghangcha.com/SUBPNG/e1/e1389e80797a225ae751a1b36c2ae284.png', tag_list: ['大数据', '数据中心'] },
+                { title: '热管结构示意图', img_src: 'https://data.hanghangcha.com/SUBPNG/19/1981c3d0be8b12c7eafa3f737aba978e.png', tag_list: ['电子元件'] },
+            ]
         }
     }
 };
@@ -113,18 +140,12 @@ export default {
 }
 
 .layout-demo :deep(.arco-layout-footer) {
-    height: 64px;
-    background-color: var(--color-primary-light-4);
     flex: 1;
 }
 
 .layout-demo :deep(.arco-layout-sider) {
-    width: 206px;
+    width: 190px;
     background-color: var(--color-primary-light-3);
-}
-
-.layout-demo :deep(.arco-layout-content) {
-    height: 800px;
 }
 
 .content-headers {
@@ -150,5 +171,32 @@ export default {
 
 .arco-layout-content:deep(.arco-menu-overflow-wrap) {
     display: flex !important;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.statistic-card {
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out forwards;
+    border: #4e5969;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+        /* 起始位置稍微偏移 */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        /* 结束时回到原位 */
+    }
 }
 </style>
